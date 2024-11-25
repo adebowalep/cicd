@@ -1,0 +1,8 @@
+pytest
+ydata_profiling
+ipywidgets
+ipytest
+pandas
+numpy
+scikit-learn
+great_expectations==0.17.12
