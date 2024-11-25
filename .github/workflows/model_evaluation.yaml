@@ -1,12 +1,24 @@
-name: model-training
-on: [push]
+name: Train Model and Report Metrics
+
+on: 
+  push:  # Trigger the workflow on pushes to the repository
+    branches: [main]  # Specify branches to trigger on
+
 jobs:
   run:
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: iterative/setup-cml@v1
-      - name: Train model
-        env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up CML
+      uses: iterative/setup-cml@v1
+
+    - name: Train model
+      env:
+        REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Access GitHub token for repository interactions
+      run: |
+        pip install -r requirements.txt
+        python wine_linear_regression_test.py
+        cat metrics.txt
